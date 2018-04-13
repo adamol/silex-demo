@@ -1,15 +1,16 @@
 <?php
 
+$app['debug'] = true;
+
 $app['db'] = function() {
-    return getenv('environment') === 'testing'
-        ? new PDO('sqlite::memory:')
-        : new PDO('mysql:host=localhost;dbname=silex_demo', getenv('DB_USER'), getenv('DB_PASS'));
+	$dbname = getenv('environment') !== 'testing'
+		? 'silex_demo'
+		: 'silex_demo_test';
+
+    return new PDO(
+		"mysql:host=localhost;dbname=$dbname",
+		getenv('DB_USER'),
+		getenv('DB_PASS')
+	);
 };
 
-$app['posts.repository'] = function($app) {
-    return new Posts\Repository($app['db']);
-};
-
-$app['posts.controller'] = function() use ($app) {
-    return new Posts\Controller($app['posts.repository']);
-};

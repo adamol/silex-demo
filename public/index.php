@@ -1,12 +1,8 @@
 <?php
 
-require __DIR__ . '/bootstrap.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
-$app = new Silex\Application();
-
-$app['debug'] = true;
-
-require __DIR__ . '/../config/application.config.php';
+$app = require __DIR__ . '/../src/bootstrap.php';
 
 $app->run();
 

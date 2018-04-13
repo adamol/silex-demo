@@ -1,10 +1,18 @@
 {
     "require": {
-        "silex/silex": "^2.2"
+        "silex/silex": "^2.2",
+        "phpunit/phpunit": "^6.5"
     },
     "autoload": {
         "psr-4": {
             "Posts\\": "src/Posts"
-        }
+        },
+        "files": [
+            "tests/ControllerTestCase.php", "utility/helpers.php"
+        ]
+    },
+    "require-dev": {
+        "symfony/browser-kit": "^3.4",
+        "symfony/css-selector": "^3.4"
     }
 }
