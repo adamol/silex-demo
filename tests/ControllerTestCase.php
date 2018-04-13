@@ -4,10 +4,15 @@ use Silex\WebTestCase;
 
 class ControllerTestCase extends WebTestCase
 {
+    protected $client;
+
     public function setUp()
     {
         parent::setUp();
 
+        $this->client = $this->createClient();
+
+        $this->app['db']->exec('ALTER TABLE posts AUTO_INCREMENT = 1');
         $this->app['db']->beginTransaction();
     }
 

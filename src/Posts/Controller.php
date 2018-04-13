@@ -4,47 +4,48 @@ namespace Posts;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Silex\Application;
 
 class Controller
 {
-    protected $repo;
+    private $repository;
 
-    public function __construct(Repository $repo)
+    private $validator;
+
+    public function __construct(Repository $repository, Validator $validator)
     {
-        $this->repo = $repo;
+        $this->repository = $repository;
+        $this->validator = $validator;
     }
 
     public function index()
     {
         return new JsonResponse(array_map(function($post) {
             return $post->toArray();
-        }, $this->repo->findAll()));
+        }, $this->repository->findAll()));
     }
 
     public function store(Request $request)
     {
-        var_dump($request->request->get('title'));
-        if (! $request->request->has('title')) {
-            throw new \InvalidArgumentException('Missing required title parameter.');
-        }
-        if (! $request->request->has('body')) {
-            throw new \InvalidArgumentException('Missing required body parameter.');
-        }
+        $this->validator->validateStoreRequest($request);
 
         $post = new Model(
             $request->request->get('title'),
             $request->request->get('body')
         );
 
-        if ($this->repo->save($post)) {
-            return new JsonResponse([
-                'success' => true
-            ]);
-        } else {
+        $lastInsertedId = $this->repository->save($post);
+
+        if (! $lastInsertedId) {
             return new JsonResponse([
                 'success' => false,
                 'message' => 'Something went wrong. Could not persist record to database'
             ]);
         }
+
+        return new JsonResponse([
+            'success' => true,
+            'last_inserted_id' => $lastInsertedId
+        ]);
     }
 }

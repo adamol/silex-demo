@@ -5,5 +5,12 @@ $app['posts.repository'] = function($app) {
 };
 
 $app['posts.controller'] = function() use ($app) {
-    return new Posts\Controller($app['posts.repository']);
+    return new Posts\Controller(
+        $app['posts.repository'],
+        $app['posts.validator']
+    );
+};
+
+$app['posts.validator'] = function() use ($app) {
+    return new Posts\Validator($app['validator']);
 };

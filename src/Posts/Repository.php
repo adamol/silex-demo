@@ -33,5 +33,17 @@ class Repository
             return new Model($entry['title'], $entry['body'], $entry['id']);
         }, $stmt->fetchAll());
     }
+
+    public function findBy($key, $value)
+    {
+        $sql = "SELECT id, title, body FROM posts WHERE $key=?";
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$value]);
+
+        $entry = $stmt->fetch();
+
+        return new Model($entry['title'], $entry['body'], $entry['id']);
+    }
 }
 
