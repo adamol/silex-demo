@@ -48,4 +48,11 @@ class Controller
             'last_inserted_id' => $lastInsertedId
         ]);
     }
+
+    public function show($postId)
+    {
+        $post = $this->repository->findBy('id', $postId);
+
+        return new JsonResponse($post->toArray());
+    }
 }
