@@ -2,7 +2,7 @@
 
 include __DIR__.'/../../vendor/autoload.php';
 
-$app = include __DIR__.'/../../src/bootstrap.php';
+$app = include __DIR__.'/../../src/app.php';
 
 $files = new DirectoryIterator(__DIR__.'/../seeds');
 foreach ($files as $file) {
