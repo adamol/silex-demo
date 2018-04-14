@@ -1,6 +1,6 @@
 <?php
 
-namespace Posts;
+namespace Products;
 
 class Model
 {

@@ -1,15 +1,15 @@
 <?php
 
-class ViewPostsTest extends ControllerTestCase
+class ViewProductsTest extends ControllerTestCase
 {
     /** @test */
-    function posts_listing_can_be_viewed()
+    function products_listing_can_be_viewed()
     {
-        $post = new Posts\Model('Some title', 'Some body', 1);
+        $product = new Products\Model('Some title', 'Some body', 1);
 
-        $this->app['posts.repository']->save($post);
+        $this->app['products.repository']->save($product);
 
-        $this->client->request('GET', '/posts');
+        $this->client->request('GET', '/products');
 
         tap($this->client->getResponse()->getContent(), function($response) {
             $decoded = json_decode($response, true);
@@ -21,13 +21,13 @@ class ViewPostsTest extends ControllerTestCase
     }
 
     /** @test */
-    function post_details_can_be_viewed()
+    function product_details_can_be_viewed()
     {
-        $post = new Posts\Model('Some title', 'Some body', 1);
+        $product = new Products\Model('Some title', 'Some body', 1);
 
-        $this->app['posts.repository']->save($post);
+        $this->app['products.repository']->save($product);
 
-        $this->client->request('GET', '/posts/1');
+        $this->client->request('GET', '/products/1');
 
         tap($this->client->getResponse()->getContent(), function($response) {
             $decoded = json_decode($response, true);

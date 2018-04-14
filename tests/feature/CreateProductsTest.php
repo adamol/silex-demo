@@ -1,11 +1,11 @@
 <?php
 
-class CreatePostsTest extends ControllerTestCase
+class CreateProductsTest extends ControllerTestCase
 {
     /** @test */
-    function posts_can_be_created()
+    function products_can_be_created()
     {
-        $this->client->request('POST', '/posts', [
+        $this->client->request('POST', '/products', [
             'title' => 'test title',
             'body' => 'test body'
         ]);
@@ -17,9 +17,9 @@ class CreatePostsTest extends ControllerTestCase
             $this->assertEquals(1, $decoded['last_inserted_id']);
         });
 
-        tap($this->app['posts.repository']->findBy('id', 1), function($post) {
-            $this->assertEquals('test title', $post->getTitle());
-            $this->assertEquals('test body', $post->getBody());
+        tap($this->app['products.repository']->findBy('id', 1), function($product) {
+            $this->assertEquals('test title', $product->getTitle());
+            $this->assertEquals('test body', $product->getBody());
         });
     }
 
@@ -28,7 +28,7 @@ class CreatePostsTest extends ControllerTestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $this->client->request('POST', '/posts', [
+        $this->client->request('POST', '/products', [
             'body' => 'test body'
         ]);
     }
@@ -38,7 +38,7 @@ class CreatePostsTest extends ControllerTestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $this->client->request('POST', '/posts', [
+        $this->client->request('POST', '/products', [
             'title' => 'test title',
         ]);
     }

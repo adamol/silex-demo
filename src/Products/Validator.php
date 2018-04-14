@@ -1,6 +1,6 @@
 <?php
 
-namespace Posts;
+namespace Products;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints;
