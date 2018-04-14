@@ -18,7 +18,10 @@ class Validator
     {
         $constraints = new Constraints\Collection([
             'title' => new Constraints\NotBlank(),
-            'body' => new Constraints\NotBlank()
+            'description' => new Constraints\NotBlank(),
+            'image_path' => new Constraints\NotBlank(),
+            'page_count' => new Constraints\NotBlank(),
+            'published_date' => new Constraints\NotBlank(),
         ]);
 
         $errors = $this->validator->validate($request->request->all(), $constraints);

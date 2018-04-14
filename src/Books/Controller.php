@@ -29,10 +29,12 @@ class Controller
     {
         $this->validator->validateStoreRequest($request);
 
-        $post = new Model(
-            $request->request->get('title'),
-            $request->request->get('body')
-        );
+        $post = (new Model())
+            ->setTitleAndSlug($request->request->get('title'))
+            ->setImagePath(Model::generateImagePath($request->request->get('image_path')))
+            ->setDescription($request->request->get('description'))
+            ->setPageCount($request->request->get('page_count'))
+            ->setPublishedDate($request->request->get('published_date'));
 
         $lastInsertedId = $this->repository->save($post);
 
