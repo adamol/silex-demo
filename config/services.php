@@ -1,10 +1,16 @@
 <?php
 
+use Symfony\Component\HttpFoundation\Session\Session;
+
 $app['debug'] = true;
 
 $app['tables'] = [
     'books'
 ];
+
+$app['session'] = function() {
+    return new Session;
+};
 
 $app['db'] = function() {
 	$dbname = getenv('environment') === 'testing'

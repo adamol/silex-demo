@@ -1,3 +1,23 @@
+Basic
+    - View books listing
+    - View book details
+    - Add book to cart
+    - Create order for cart
+        + Order confirmation number
+        + Stripe integration
+        + Send email
+            - Queue sending email
+    - View order
+Admin
+    - Create book resource
+        + Image upload
+        + Queue resize
+    - Add inventory
+    - Update order status
+        + Send email
+
+---------------------------------------
+
 Book
 - id
 - title

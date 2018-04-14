@@ -5,7 +5,8 @@ require __DIR__ . "/providers.php";
 require __DIR__ . "/middleware.php";
 
 $modules = [
-    'Books'
+    'Books',
+    'Cart'
 ];
 
 foreach ($modules as $module) {

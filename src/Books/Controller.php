@@ -4,7 +4,6 @@ namespace Books;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Silex\Application;
 
 class Controller
 {
