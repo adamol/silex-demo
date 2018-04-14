@@ -1,0 +1,85 @@
+Book
+- id
+- title
+- slug
+- description
+- image_path
+- page_count
+- published_date
+- isbn
+- created_at
+- updated_at
+
+BookItem  --  inventory_count for Book is count(BookItem)
+- id
+- book_id
+- price
+- inventory_code
+- reserved_at (nullable)
+- order_id (nullable)
+- created_at
+- updated_at
+
+author_book
+- id
+- book_id
+- author_id
+- created_at
+- updated_at
+
+// POST create book
+// POST create author1
+// POST create author2
+// POST books/5/authors author1_id
+// POST books/5/authors author2_id
+Author
+- id
+- name
+
+book_category
+- id
+- book_id
+- category_id
+- created_at
+- updated_at
+
+Category
+- id
+- type Enum(thriller, comedy, novel, ...)
+- created_at
+- updated_at
+
+book_item_order
+- id
+- book_item_id
+- order_id
+- created_at
+- updated_at
+
+Order
+- id
+- email
+- amount
+- card_last_four
+- confirmation_number
+- created_at
+- updated_at
+
+# book_format
+# - id
+# - book_id
+# - format_id
+# - price
+# - created_at
+# - updated_at
+#
+# Format
+# - id
+# - type Enum(pocket, hardcover, audio, ebook)
+# - created_at
+# - updated_at
+
+# authentication system
+# order history
+# book recommendations based off previous purchases
+# newsletter

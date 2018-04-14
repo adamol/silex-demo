@@ -4,18 +4,23 @@ namespace Books;
 
 class Model
 {
-    private $title;
-
-    private $body;
-
     private $id;
 
-    public function __construct($title, $body, $id = null)
-    {
-        $this->title = $title;
-        $this->body = $body;
-        $this->id = $id;
-    }
+    private $title;
+
+    private $slug;
+
+    private $imagePath;
+
+    private $description;
+
+    private $pageCount;
+
+    private $publishedDate;
+
+    private $createdAt;
+
+    private $updatedAt;
 
     /**
      * @return string

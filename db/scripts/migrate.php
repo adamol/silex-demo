@@ -4,7 +4,7 @@ include __DIR__.'/../../vendor/autoload.php';
 
 $app = include __DIR__.'/../../src/app.php';
 
-$app['db']->exec('DROP TABLE posts');
+$app['db_manager']->dropAllTables();
 
 $files = new DirectoryIterator(__DIR__.'/../migrations');
 foreach ($files as $file) {

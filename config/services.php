@@ -2,6 +2,10 @@
 
 $app['debug'] = true;
 
+$app['tables'] = [
+    'books'
+];
+
 $app['db'] = function() {
 	$dbname = getenv('environment') === 'testing'
 		? 'silex_demo_test'
@@ -12,5 +16,9 @@ $app['db'] = function() {
 		getenv('DB_USER') ?: 'root',
 		getenv('DB_PASS') ?: 'root'
 	);
+};
+
+$app['db_manager'] = function($app) {
+    return new \Framework\DatabaseManager($app['db'], $app['tables']);
 };
 

@@ -12,7 +12,8 @@ class ControllerTestCase extends WebTestCase
 
         $this->client = $this->createClient();
 
-        $this->app['db']->exec('ALTER TABLE books AUTO_INCREMENT = 1');
+        $this->app['db_manager']->resetAllIncrements();
+
         $this->app['db']->beginTransaction();
     }
 
