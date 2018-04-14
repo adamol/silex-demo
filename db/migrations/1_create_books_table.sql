@@ -1,4 +1,4 @@
-CREATE TABLE products (
+CREATE TABLE books (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(50) NOT NULL,
     body TEXT NOT NULL

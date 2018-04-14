@@ -6,7 +6,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Products\\": "src/Products"
+            "Books\\": "src/Books"
         },
         "files": [
             "tests/ControllerTestCase.php", "utility/helpers.php"

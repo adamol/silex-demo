@@ -1,6 +1,6 @@
 <?php
 
-namespace Products;
+namespace Books;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints;

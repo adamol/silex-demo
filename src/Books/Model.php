@@ -1,6 +1,6 @@
 <?php
 
-namespace Products;
+namespace Books;
 
 class Model
 {

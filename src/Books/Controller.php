@@ -1,6 +1,6 @@
 <?php
 
-namespace Products;
+namespace Books;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -49,10 +49,10 @@ class Controller
         ]);
     }
 
-    public function show($productId)
+    public function show($bookId)
     {
-        $product = $this->repository->findBy('id', $productId);
+        $book = $this->repository->findBy('id', $bookId);
 
-        return new JsonResponse($product->toArray());
+        return new JsonResponse($book->toArray());
     }
 }
