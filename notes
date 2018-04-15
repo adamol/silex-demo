@@ -1,4 +1,4 @@
-Basic
+Customer
     - View books listing
         + Filter by category
     - View book details
@@ -10,10 +10,10 @@ Basic
             - Queue sending email       !!!
     - View order
 Admin
-    - sign in
+    - sign in/up/load (tokens)
     - Create book resource
         + Image upload                  !!!
-        + Queue resize                  !!!
+            - Queue resize              !!!
     - Add inventory
     - Update order status
         + Send email
@@ -42,6 +42,7 @@ Book
 - id
 - title
 - slug
+- price
 - description
 - image_path
 - page_count
@@ -50,7 +51,7 @@ Book
 - created_at
 - updated_at
 
-BookItem  --  inventory_count for Book is count(BookItem)
+BookItem
 - id
 - book_id
 - price
@@ -59,22 +60,6 @@ BookItem  --  inventory_count for Book is count(BookItem)
 - order_id (nullable)
 - created_at
 - updated_at
-
-author_book
-- id
-- book_id
-- author_id
-- created_at
-- updated_at
-
-// POST create book
-// POST create author1
-// POST create author2
-// POST books/5/authors author1_id
-// POST books/5/authors author2_id
-Author
-- id
-- name
 
 book_category
 - id
@@ -105,6 +90,17 @@ Order
 - created_at
 - updated_at
 
+# author_book
+# - id
+# - book_id
+# - author_id
+# - created_at
+# - updated_at
+
+# Author
+# - id
+# - name
+
 # book_format
 # - id
 # - book_id
@@ -112,14 +108,9 @@ Order
 # - price
 # - created_at
 # - updated_at
-#
+
 # Format
 # - id
 # - type Enum(pocket, hardcover, audio, ebook)
 # - created_at
 # - updated_at
-
-# authentication system
-# order history
-# book recommendations based off previous purchases
-# newsletter
