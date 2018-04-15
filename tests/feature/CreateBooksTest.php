@@ -13,11 +13,9 @@ class CreateBooksTest extends ControllerTestCase
             'published_date' => '2010-10-10',
         ]);
 
-        tap($this->client->getResponse()->getContent(), function($response) {
-            $decoded = json_decode($response, true);
-
-            $this->assertTrue($decoded['success']);
-            $this->assertEquals(1, $decoded['last_inserted_id']);
+        tap($this->getJsonResponse(), function($response) {
+            $this->assertTrue($response['success']);
+            $this->assertEquals(1, $response['last_inserted_id']);
         });
 
         tap($this->app['books.repository']->findBy('id', 1), function($book) {

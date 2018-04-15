@@ -1,22 +1,42 @@
 Basic
     - View books listing
+        + Filter by category
     - View book details
     - Add book to cart
     - Create order for cart
         + Order confirmation number
-        + Stripe integration
+        + Stripe integration            !!!
         + Send email
-            - Queue sending email
+            - Queue sending email       !!!
     - View order
 Admin
+    - sign in
     - Create book resource
-        + Image upload
-        + Queue resize
+        + Image upload                  !!!
+        + Queue resize                  !!!
     - Add inventory
     - Update order status
         + Send email
+            - Do NOT Queue              !!!
+
+# authentication system
+#   order history
+# recommendations
+# newsletter
+# feedbacks
+# audio and ebook
+# frontend client
 
 ---------------------------------------
+
+User
+- id
+- username
+- password
+- token
+- token_timestamp
+- created_at
+- updated_at
 
 Book
 - id

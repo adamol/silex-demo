@@ -16,17 +16,24 @@ class Repository
         $this->session = $session;
     }
 
-    public function save(Item $item)
+    public function save(Item\Model $item, $sessionId)
     {
-        $cart = $this->session->get('cart', []);
+        $cart = $this->session->get($this->getCartKey($sessionId), new Model);
 
-        $cart[] =  $item;
+        $cart->append($item);
 
-        $this->session->set('cart', $cart);
+        $this->session->set($this->getCartKey($sessionId), $cart);
     }
 
-    public function findItems()
+    public function get($sessionId)
     {
-        return $this->session->get('cart');
+        return $this->session->get($this->getCartKey($sessionId));
+    }
+
+    private function getCartKey($sessionId)
+    {
+        // This namespacing is only really necessary to fix tests
+        // but it also doesn't affect the working code.
+        return 'cart'.$sessionId;
     }
 }

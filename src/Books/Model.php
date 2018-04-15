@@ -18,6 +18,10 @@ class Model
 
     private $pageCount;
 
+    private $price;
+
+    private $categories;
+
     private $publishedDate;
 
     private $updatedAt;
@@ -51,6 +55,18 @@ class Model
         $this->title = $value;
 
         return $this;
+    }
+
+    public function setCategories($value)
+    {
+        $this->categories = $value;
+
+        return $this;
+    }
+
+    public function getCategories()
+    {
+        return $this->categories;
     }
 
     public function getSlug()
@@ -131,6 +147,18 @@ class Model
         return $this->createdAt;
     }
 
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    public function setPrice($value)
+    {
+        $this->price = $value;
+
+        return $this;
+    }
+
     public function setCreatedAt($value)
     {
         $this->createdAt = $value;
@@ -162,6 +190,8 @@ class Model
           'image_path' => $this->getImagePath(),
           'description' => $this->getDescription(),
           'page_count' => $this->getPageCount(),
+          'price' => $this->getPrice(),
+          'categories' => $this->getCategories(),
           'published_date' => $this->getPublishedDate(),
           'created_at' => $this->getCreatedAt(),
           'updated_at' => $this->getUpdatedAt()

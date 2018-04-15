@@ -19,7 +19,7 @@ class Controller
 
     public function show(Request $request)
     {
-        $cart = $this->repository->findItems();
+        $cart = $this->repository->get($request->cookies->get('PHPSESSID'));
 
         return new JsonResponse(array_map(function($item) {
             return $item->toArray();
@@ -30,11 +30,11 @@ class Controller
     {
         $this->validator->validateStoreRequest($request);
 
-        $item = (new Item)
+        $item = (new Item\Model)
             ->setBookId($request->request->get('book_id'))
             ->setAmount($request->request->get('amount'));
 
-        $this->repository->save($item);
+        $this->repository->save($item, $request->cookies->get('PHPSESSID'));
 
         return new JsonResponse([
             'success' => true

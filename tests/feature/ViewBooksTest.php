@@ -16,20 +16,18 @@ class ViewBooksTest extends ControllerTestCase
 
         $this->client->request('GET', '/books');
 
-        tap($this->client->getResponse()->getContent(), function($response) use ($book) {
-            $decoded = json_decode($response, true);
-
-            $this->assertCount(1, $decoded);
-            $this->assertEquals(1, $decoded[0]['id']);
-            $this->assertEquals('Some Title', $decoded[0]['title']);
-            $this->assertEquals('some-title', $decoded[0]['slug']);
-            $this->assertEquals($book->getImagePath(), $decoded[0]['image_path']);
-            $this->assertEquals($book->getDescription(), $decoded[0]['description']);
-            $this->assertEquals(250, $decoded[0]['page_count']);
-            $this->assertEquals('2010-10-10', $decoded[0]['published_date']);
-            $this->assertNotNull($decoded[0]['updated_at']);
-            $this->assertNotNull($decoded[0]['created_at']);
-            $this->assertEquals($decoded[0]['updated_at'], $decoded[0]['created_at']);
+        tap($this->getJsonResponse(), function($response) use ($book) {
+            $this->assertCount(1, $response);
+            $this->assertEquals(1, $response[0]['id']);
+            $this->assertEquals('Some Title', $response[0]['title']);
+            $this->assertEquals('some-title', $response[0]['slug']);
+            $this->assertEquals($book->getImagePath(), $response[0]['image_path']);
+            $this->assertEquals($book->getDescription(), $response[0]['description']);
+            $this->assertEquals(250, $response[0]['page_count']);
+            $this->assertEquals('2010-10-10', $response[0]['published_date']);
+            $this->assertNotNull($response[0]['updated_at']);
+            $this->assertNotNull($response[0]['created_at']);
+            $this->assertEquals($response[0]['updated_at'], $response[0]['created_at']);
         });
     }
 
@@ -47,19 +45,17 @@ class ViewBooksTest extends ControllerTestCase
 
         $this->client->request('GET', '/books/1');
 
-        tap($this->client->getResponse()->getContent(), function($response) use ($book) {
-            $decoded = json_decode($response, true);
-
-            $this->assertEquals(1, $decoded[0]['id']);
-            $this->assertEquals('Some Title', $decoded[0]['title']);
-            $this->assertEquals('some-title', $decoded[0]['slug']);
-            $this->assertEquals($book->getImagePath(), $decoded[0]['image_path']);
-            $this->assertEquals($book->getDescription(), $decoded[0]['description']);
-            $this->assertEquals(250, $decoded[0]['page_count']);
-            $this->assertEquals('2010-10-10', $decoded[0]['published_date']);
-            $this->assertNotNull($decoded[0]['updated_at']);
-            $this->assertNotNull($decoded[0]['created_at']);
-            $this->assertEquals($decoded[0]['updated_at'], $decoded[0]['created_at']);
+        tap($this->getJsonResponse(), function($response) use ($book) {
+            $this->assertEquals(1, $response[0]['id']);
+            $this->assertEquals('Some Title', $response[0]['title']);
+            $this->assertEquals('some-title', $response[0]['slug']);
+            $this->assertEquals($book->getImagePath(), $response[0]['image_path']);
+            $this->assertEquals($book->getDescription(), $response[0]['description']);
+            $this->assertEquals(250, $response[0]['page_count']);
+            $this->assertEquals('2010-10-10', $response[0]['published_date']);
+            $this->assertNotNull($response[0]['updated_at']);
+            $this->assertNotNull($response[0]['created_at']);
+            $this->assertEquals($response[0]['updated_at'], $response[0]['created_at']);
         });
     }
 }

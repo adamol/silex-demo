@@ -11,31 +11,52 @@ class Controller
 
     private $validator;
 
-    public function __construct(Repository $repository, Validator $validator)
+    private $authenticator;
+
+    private $jobRepository;
+
+    private $fileUploader;
+
+    public function __construct(Repository $repository, Validator $validator, Auth\Authenticator $authenticator, Framework\JobRepository $jobRepository, \Framework\FileUploader $fileUploader)
     {
         $this->repository = $repository;
         $this->validator = $validator;
+        $this->authenticator = $authenticator;
+        $this->jobRepository = $jobRepository;
+        $this->fileUploader = $fileUploader;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return new JsonResponse(array_map(function($post) {
-            return $post->toArray();
-        }, $this->repository->findAll()));
+        if ($request->query->has('categories')) {
+            $books = $this->repository->findByCategories(
+                $request->query->get('categories')
+            );
+        } else {
+            $books = $this->repository->findAll();
+        }
+
+        return new JsonResponse(array_map(function($book) {
+            return $book->toArray();
+        }, $books));
     }
 
     public function store(Request $request)
     {
         $this->validator->validateStoreRequest($request);
+        $this->authenticator->verifyAdminRequest($request);
 
-        $post = (new Model())
+        $imagePaths = $this->fileUploader->uploadFiles($request->files, 'images/book_covers/');
+        $this->jobRepository->scheduleImageResize($imagePaths);
+
+        $book = (new Model())
             ->setTitleAndSlug($request->request->get('title'))
-            ->setImagePath(Model::generateImagePath($request->request->get('image_path')))
+            ->setImagePath($image)
             ->setDescription($request->request->get('description'))
             ->setPageCount($request->request->get('page_count'))
             ->setPublishedDate($request->request->get('published_date'));
 
-        $lastInsertedId = $this->repository->save($post);
+        $lastInsertedId = $this->repository->save($book);
 
         if (! $lastInsertedId) {
             return new JsonResponse([
@@ -52,7 +73,7 @@ class Controller
 
     public function show($bookId)
     {
-        $book = $this->repository->findBy('id', $bookId);
+        $book = $this->repository->findById($bookId);
 
         return new JsonResponse($book->toArray());
     }

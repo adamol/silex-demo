@@ -31,4 +31,11 @@ class ControllerTestCase extends WebTestCase
         return $app;
     }
 
+    protected function getJsonResponse($client = null)
+    {
+        if ($client === null) {
+            $client = $this->client;
+        }
+        return json_decode($client->getResponse()->getContent(), true);
+    }
 }

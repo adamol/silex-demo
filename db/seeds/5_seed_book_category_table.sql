@@ -1,0 +1,10 @@
+INSERT INTO book_category (book_id, category_id, created_at) VALUES (1, 1, null);
+INSERT INTO book_category (book_id, category_id, created_at) VALUES (2, 2, null);
+INSERT INTO book_category (book_id, category_id, created_at) VALUES (3, 3, null);
+INSERT INTO book_category (book_id, category_id, created_at) VALUES (4, 4, null);
+INSERT INTO book_category (book_id, category_id, created_at) VALUES (5, 5, null);
+INSERT INTO book_category (book_id, category_id, created_at) VALUES (1, 6, null);
+INSERT INTO book_category (book_id, category_id, created_at) VALUES (2, 7, null);
+INSERT INTO book_category (book_id, category_id, created_at) VALUES (2, 1, null);
+INSERT INTO book_category (book_id, category_id, created_at) VALUES (3, 1, null);
+INSERT INTO book_category (book_id, category_id, created_at) VALUES (4, 1, null);

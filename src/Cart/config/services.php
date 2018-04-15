@@ -11,3 +11,4 @@ $app['cart.validator'] = function() use ($app) {
 $app['cart.repository'] = function() use ($app) {
     return new Cart\Repository($app['session']);
 };
+

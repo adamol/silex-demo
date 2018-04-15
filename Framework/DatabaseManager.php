@@ -17,6 +17,7 @@ class DatabaseManager
     public function resetAllIncrements()
     {
         foreach ($this->tables as $table) {
+            echo "Resetting auto increment for table $table. \n";
             $this->db->exec("ALTER TABLE $table AUTO_INCREMENT = 1");
         }
     }
@@ -24,6 +25,7 @@ class DatabaseManager
     public function dropAllTables()
     {
         foreach ($this->tables as $table) {
+            echo "Dropping table $table. \n";
             $this->db->exec("DROP TABLE $table");
         }
     }

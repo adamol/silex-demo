@@ -5,6 +5,7 @@ CREATE TABLE books (
     image_path VARCHAR(255) NOT NULL,
     description TEXT NOT NULL,
     page_count INT NOT NULL,
+    price INT NOT NULL,
     published_date DATETIME NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT 0,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
