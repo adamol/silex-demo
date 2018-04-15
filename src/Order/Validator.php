@@ -4,16 +4,10 @@ namespace Cart;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints;
+use Framework\BaseValidator;
 
-class Validator
+class Validator extends BaseValidator
 {
-    private $validator;
-
-    public function __construct($validator)
-    {
-        $this->validator = $validator;
-    }
-
     public function validateStoreRequest(Request $request)
     {
         $constraints = new Constraints\Collection([
@@ -21,12 +15,6 @@ class Validator
             'payment_token' => new Constraints\NotBlank(),
         ]);
 
-        $errors = $this->validator->validate($request->request->all(), $constraints);
-
-        if (count($errors) > 0) {
-            throw new \InvalidArgumentException(
-                'Validation failed: ' . $errors[0]->getMessage()
-            );
-        }
+        $this->validate($request->request->all(), $constraints);
     }
 }

@@ -2,47 +2,42 @@
 
 namespace Auth;
 
-public function Validator()
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Constraints;
+use Framework\BaseValidator;
+
+class Validator extends BaseValidator
 {
     public function validateSignUp($request)
     {
-        $validRequest =
-            $request->request->has('username') &&
-            $request->request->has('password') &&
-            $request->request->has('verify_password') &&
-            $request->request->get('password') === $request->request->get('verify_password');
+        $constraints = new Constraints\Collection([
+            'username' => new Constraints\NotBlank(),
+            'password' => new Constraints\NotBlank(),
+            'verify_password' => new Constraints\EqualTo(
+                $request->request->get('password')
+            ),
+        ]);
 
-
-        if (! $validaRequest) {
-            throw new \InvalidArgumentException(
-                'Validation failed: ' . $errors[0]->getMessage()
-            );
-        }
+        $this->validate($request->request->all(), $constraints);
     }
 
     public function validateSignIn($request)
     {
-        $validRequest =
-            $request->request->has('username') &&
-            $request->request->has('password');
+        $constraints = new Constraints\Collection([
+            'username' => new Constraints\NotBlank(),
+            'password' => new Constraints\NotBlank(),
+        ]);
 
-
-        if (! $validaRequest) {
-            throw new \InvalidArgumentException(
-                'Validation failed: ' . $errors[0]->getMessage()
-            );
-        }
+        $this->validate($request->request->all(), $constraints);
     }
 
     public function validateSignOut($request)
     {
-        $validRequest = $request->request->has('token');
+        $constraints = new Constraints\Collection([
+            'token' => new Constraints\NotBlank(),
+        ]);
 
-
-        if (! $validaRequest) {
-            throw new \InvalidArgumentException(
-                'Validation failed: ' . $errors[0]->getMessage()
-            );
-        }
+        $this->validate($request->request->all(), $constraints);
     }
 }
+

@@ -1,6 +1,6 @@
 <?php
 
-class AbstractEmail
+abstract class AbstractEmail
 {
     public function getFrom()
     {

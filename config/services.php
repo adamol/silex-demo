@@ -59,7 +59,6 @@ $app['image_manager'] = function() {
 };
 
 $app['storage'] = function() {
-    private $storage;
     return new \Framework\Storage();
 };
 
@@ -74,7 +73,19 @@ $app['http_client'] = function($app) {
     return new \GuzzleHttp\Client();
 };
 
+$app['logger'] = function() {
+    $logger = new \Monolog\Logger('name');
+
+    $streamHandler = new \Monolog\Handler\StreamHandler(
+        'storage/logs/log', \Monolog\Logger::WARNING
+    );
+
+    $logger->pushHandler($streamHandler);
+
+    return $logger;
+};
+
 $app['stripe.api_key'] = getenv('STRIPE_API_KEY');
 
-$app['encryption.method' => getenv('ENCRYPTION_METHOD');
-$app['encryption.key' => getenv('ENCRYPTION_KEY');
+$app['encryption.method'] = getenv('ENCRYPTION_METHOD');
+$app['encryption.key'] = getenv('ENCRYPTION_KEY');
