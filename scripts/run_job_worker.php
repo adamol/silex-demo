@@ -12,7 +12,13 @@ while (true) {
 
     if (! empty($pendingJobs)) {
         foreach ($pendingJobs as $job) {
-            $jobWorker->processJob($job);
+            try {
+                $jobWorker->processJob($job);
+
+                $jobRepository->updateJobStatus($job, 'done');
+            } catch (\Exception $e) {
+                $jobRepository->updateJobStatus($job, 'failed');
+            }
         }
     }
 

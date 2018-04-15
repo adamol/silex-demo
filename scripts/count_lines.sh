@@ -1,3 +1,3 @@
 #!/bin/bash
 
-find src tests config db Framework utility '*.php' | xargs wc -l
+find src tests config db Framework utility scripts '*.php' | xargs wc -l

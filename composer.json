@@ -13,7 +13,7 @@
             "Books\\": "src/Books",
             "Cart\\": "src/Cart",
             "Order\\": "src/Order",
-            "Framework\\": "Framework"
+            "Framework\\": "src/Framework"
         },
         "files": [
             "tests/ControllerTestCase.php", "utility/helpers.php"

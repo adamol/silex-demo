@@ -63,4 +63,18 @@ class JobsRepository
             json_decode($entry['options'], true)
         );
     }
+
+    public function updateJobStatus(Job $job, $status)
+    {
+        $sql = '
+            UPDATE jobs
+            SET status=?
+            WHERE id=?
+        ';
+
+        $stmt = $this->db->prepare($sql);
+
+        $stmt->execute([$status, $job->getId()]);
+
+    }
 }
