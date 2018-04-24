@@ -18,6 +18,8 @@ Admin
     - Update order status
         + Send email
             - Do NOT Queue              !!!
+General
+    - exceptions are logged             !!!
 
 # authentication system
 #   order history

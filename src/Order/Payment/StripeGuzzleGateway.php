@@ -21,7 +21,7 @@ class StripeGuzzleGateway
 			$response = $this->guzzleClient->request('POST', 'https://api.stripe.com/v1/charges', [
 				'auth' => [$this->apiKey, ''],
 				'form_params' => [
-					'amount' => 1500,
+					'amount' => $amount,
 					'currency' => 'eur',
 					'source' => $token,
 					'description' => "Charge for $email"
