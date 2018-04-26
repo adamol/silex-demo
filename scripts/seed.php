@@ -4,7 +4,7 @@ include __DIR__.'/../vendor/autoload.php';
 
 $app = include __DIR__.'/../src/app.php';
 
-$files = new DirectoryIterator(__DIR__.'/../seeds');
+$files = new DirectoryIterator(__DIR__.'/../db/seeds');
 foreach ($files as $file) {
     if (!$file->isDot()) {
         $lines = file(__DIR__.'/../db/seeds/'.$file->getFilename());

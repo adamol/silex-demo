@@ -1,3 +1,31 @@
+@TODO
+    remove cart items!
+
+@TODO
+    laravel HttpClient guzzle fake test helper?
+    composer require adamol/laravel-guzzle-fake
+    register ServiceProvider
+    GuzzleClient::fake
+    HttpClient::fake
+    HttpClient::assertWasCalled();
+    ...
+    new HttpRequest -> scaffolding like by email
+        -> queable?
+@TODO
+    typehint any class in controller method
+        -> augment ArgumentResolver
+        -> resolve service from container
+            -> used for filters, wrapping request
+    typehint requests/forms/resources
+        -> they need validation to run as well though
+    return resources
+        -> zend/hydrator thephpleague/fractal
+    jobs need drivers
+        -> first mysql
+        -> later redis
+    testing fakes for mailer, httpclient, etc
+
+
 Customer
     - View books listing
         + Filter by category

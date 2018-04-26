@@ -66,10 +66,12 @@ class Repository
             SELECT
                 books.id, books.title, books.slug, books.image_path, books.description, books.page_count,
                 books.price, books.published_date, books.created_at, books.updated_at,
-                GROUP_CONCAT(categories.type) as comma_seperated_categories
+                GROUP_CONCAT(DISTINCT(categories.type)) as comma_seperated_categories,
+                count(*) as book_count
             FROM books
-            JOIN book_category ON book_category.book_id = book.id
+            JOIN book_category ON book_category.book_id = books.id
             JOIN categories ON categories.id = book_category.category_id
+            JOIN book_items on book_items.book_id = books.id
             GROUP BY books.id
         ';
 
@@ -83,20 +85,24 @@ class Repository
 
     public function findByCategories($categories)
     {
-        $sql = '
+        $prepared = implode(',', array_fill(0, count($categories), '?'));
+
+        $sql = "
             SELECT
                 books.id, books.title, books.slug, books.image_path, books.description, books.page_count,
                 books.price, books.published_date, books.created_at, books.updated_at,
-                GROUP_CONCAT(categories.type) as comma_seperated_categories
+                GROUP_CONCAT(DISTINCT(categories.type)) as comma_seperated_categories,
+                count(DISTINCT(book_items.id)) as book_count
             FROM books
-            JOIN book_category ON book_category.book_id = book.id
+            JOIN book_category ON book_category.book_id = books.id
             JOIN categories ON categories.id = book_category.category_id
-            WHERE categories.type IN ?
+            JOIN book_items on book_items.book_id = books.id
+            WHERE categories.type IN ($prepared)
             GROUP BY books.id
-        ';
+        ";
 
         $stmt = $this->db->prepare($sql);
-        $stmt->execute([$categories]);
+        $stmt->execute($categories);
 
         return array_map(function($entry) {
             return $this->hydrateEntry($entry);
@@ -107,9 +113,16 @@ class Repository
     {
         $sql = "
             SELECT
-                id, title, slug, image_path, description, page_count,
-                price, published_date, created_at, updated_at
-            FROM books WHERE id=?
+                books.id, books.title, books.slug, books.image_path,
+                books.description, books.page_count, books.price,
+                books.published_date, books.created_at, books.updated_at,
+                GROUP_CONCAT(DISTINCT(categories.type)) as comma_seperated_categories,
+                count(*) as book_count
+            FROM books
+            JOIN book_category ON book_category.book_id = books.id
+            JOIN categories ON categories.id = book_category.category_id
+            JOIN book_items on book_items.book_id = books.id
+            WHERE books.id=?
         ";
 
         $stmt = $this->db->prepare($sql);
@@ -120,7 +133,7 @@ class Repository
         return $this->hydrateEntry($entry);
     }
 
-    protected function hydrateEntry()
+    protected function hydrateEntry($entry)
     {
         return (new Model)
             ->setId($entry['id'])
@@ -132,6 +145,7 @@ class Repository
             ->setPrice($entry['price'])
             ->setPublishedDate($entry['published_date'])
             ->setCategories($entry['comma_seperated_categories'])
+            ->setBookCount($entry['book_count'])
             ->setCreatedAt($entry['created_at'])
             ->setUpdatedAt($entry['updated_at']);
     }

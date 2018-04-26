@@ -2,7 +2,7 @@
 
 $app->get('/books', 'books.controller:index');
 
-$app->get('/books/{bookId}', 'books.controller:index');
+$app->get('/books/{bookId}', 'books.controller:show');
 
 $app->post('/books', 'books.controller:store');
 

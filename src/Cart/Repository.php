@@ -16,11 +16,15 @@ class Repository
         $this->session = $session;
     }
 
-    public function save(Item\Model $item, $sessionId)
+    public function save(Item $item, $sessionId)
     {
         $cart = $this->session->get($this->getCartKey($sessionId), new Model);
 
-        $cart->append($item);
+        if ($cart->has($item)) {
+            $cart->increaseAmountForItem($item, $item->getAmount());
+        } else {
+            $cart->append($item);
+        }
 
         $this->session->set($this->getCartKey($sessionId), $cart);
     }

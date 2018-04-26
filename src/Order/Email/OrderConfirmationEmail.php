@@ -2,11 +2,14 @@
 
 namespace Order\Email;
 
+use Framework\AbstractEmail;
+use Framework\Queueable;
+
 class OrderConfirmationEmail extends AbstractEmail implements Queueable
 {
     private $order;
 
-    public function __construct(Model $order)
+    public function __construct(\Order\Model $order)
     {
         $this->order = $order;
     }

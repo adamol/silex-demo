@@ -1,21 +1,24 @@
 <?php
 
-namespace Order;
+namespace Framework;
 
 class Mailer
 {
     private $mailer;
 
-    public function __construct(Swift_Mailer $mailer)
+    private $jobRepository;
+
+    public function __construct(\Swift_Mailer $mailer, JobsRepository $jobRepository)
     {
         $this->mailer = $mailer;
+        $this->jobRepository = $jobRepository;
     }
 
     public function handle(\Framework\Job $job)
     {
         $options = $job->getOptions();
 
-        $message = (new Swift_Message($options['subject']))
+        $message = (new \Swift_Message($options['subject']))
           ->setFrom($options['from'])
           ->setTo($options['to'])
           ->setBody($options['body']);

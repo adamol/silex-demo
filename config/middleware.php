@@ -2,7 +2,7 @@
 
 use Symfony\Component\HttpFoundation\Request;
 
-$app->error(function(\Exception $e, $code) {
+$app->error(function(\Exception $e, $code) use ($app) {
     $app['logger']->warning($e->getMessage());
 });
 

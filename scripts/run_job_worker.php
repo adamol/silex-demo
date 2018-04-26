@@ -17,6 +17,7 @@ while (true) {
 
                 $jobRepository->updateJobStatus($job, 'done');
             } catch (\Exception $e) {
+                var_dump($e->getMessage());
                 $jobRepository->updateJobStatus($job, 'failed');
             }
         }

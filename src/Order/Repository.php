@@ -15,9 +15,9 @@ class Repository
     {
         $sql = '
             INSERT INTO orders
-            (email, amount, card_last_four, confirmation_number)
+            (email, amount, card_last_four, confirmation_number, created_at)
             VALUES
-            (?, ?, ?, ?)
+            (?, ?, ?, ?, null)
         ';
 
         $stmt = $this->db->prepare($sql);
@@ -27,6 +27,8 @@ class Repository
             $order->getCardLastFour(),
             $order->getConfirmationNumber()
         ]);
+
+        return $this->db->lastInsertId();
     }
 
     public function findOrderWithBooksByConfirmationNumber($confirmationNumber)
@@ -48,7 +50,7 @@ class Repository
 
         $stmt = $this->db->prepare($sql);
 
-        $stmt->execute([$confirmationNumber);
+        $stmt->execute([$confirmationNumber]);
 
         $entry = $stmt->fetch();
 
@@ -70,7 +72,7 @@ class Repository
 
         $stmt = $this->db->prepare($sql);
 
-        $stmt->execute([$confirmationNumber);
+        $stmt->execute([$confirmationNumber]);
 
         return $stmt->fetch();
     }
@@ -87,7 +89,7 @@ class Repository
 
         $stmt = $this->db->prepare($sql);
 
-        $stmt->execute([$order['id']);
+        $stmt->execute([$order['id']]);
 
         return $stmt->fetchAll();
     }

@@ -23,14 +23,14 @@ class Controller
 
         return new JsonResponse(array_map(function($item) {
             return $item->toArray();
-        }, $cart));
+        }, $cart->getItems()));
     }
 
     public function store(Request $request)
     {
         $this->validator->validateStoreRequest($request);
 
-        $item = (new Item\Model)
+        $item = (new Item)
             ->setBookId($request->request->get('book_id'))
             ->setAmount($request->request->get('amount'));
 

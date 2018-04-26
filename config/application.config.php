@@ -6,7 +6,9 @@ require __DIR__ . "/middleware.php";
 
 $modules = [
     'Books',
-    'Cart'
+    'Cart',
+    'Auth',
+    'Order'
 ];
 
 foreach ($modules as $module) {

@@ -11,10 +11,10 @@ class Validator
         $this->validator = $validator;
     }
 
-    public function validate()
+    public function validate($input, $constraints)
     {
         $violations = $this->validator->validate(
-            $request->request->all(),
+            $input,
             $constraints
         );
 

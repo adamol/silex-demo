@@ -22,6 +22,8 @@ class Model
 
     private $categories;
 
+    private $bookCount;
+
     private $publishedDate;
 
     private $updatedAt;
@@ -192,9 +194,22 @@ class Model
           'page_count' => $this->getPageCount(),
           'price' => $this->getPrice(),
           'categories' => $this->getCategories(),
+          'book_count' => $this->getBookCount(),
           'published_date' => $this->getPublishedDate(),
           'created_at' => $this->getCreatedAt(),
           'updated_at' => $this->getUpdatedAt()
         ];
+    }
+
+    public function getBookCount()
+    {
+        return $this->bookCount;
+    }
+
+    public function setBookCount($value)
+    {
+        $this->bookCount = $value;
+
+        return $this;
     }
 }

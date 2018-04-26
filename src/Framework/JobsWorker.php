@@ -18,10 +18,9 @@ class JobsWorker
 
     public function processJob($job)
     {
-        if (! in_array($job->getType(), $this->jobHandler)) {
-            throw new \RuntimeException(
-                'No Job Handler associated with retrieved job.'
-            );
+        if (! in_array($job->getType(), array_keys($this->jobHandlers))) {
+            $errorMessage = sprintf('No Job Handler of type %s.', $job->getType());;
+            throw new \RuntimeException($errorMessage);
         }
 
         $handler = $this->jobHandlers[$job->getType()];

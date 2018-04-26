@@ -22,13 +22,13 @@ class Controller
     private $authenticator;
 
     public function __construct(
-        $validator,
-        $paymentGateway,
-        $cartRepository,
-        $bookItemRepository,
-        $orderRepository,
-        Auth\Authenticator $authenticator,
-        $mailer
+        \Framework\Validator $validator,
+        \Order\Payment\PaymentGateway $paymentGateway,
+        \Cart\Repository $cartRepository,
+        \Books\Item\Repository $bookItemRepository,
+        \Order\Repository $orderRepository,
+        \Framework\Mailer $mailer,
+        \Auth\Authenticator $authenticator
     ) {
         $this->validator = $validator;
         $this->paymentGateway = $paymentGateway;
@@ -51,7 +51,7 @@ class Controller
     {
         $this->validator->validateStoreRequest($request);
 
-        $cart = $this->cartRepository->get($request->getSession());
+        $cart = $this->cartRepository->get($request->cookies->get('PHPSESSID'));
 
         try {
             $reservation = $cart->reserveItems(
@@ -68,18 +68,23 @@ class Controller
             $order = (new Model)
                 ->setItems($reservation->getItems())
                 ->setEmail($reservation->getEmail())
-                ->setAmount($charge->amount())
+                ->setAmount($charge->getAmount())
                 ->setCardLastFour($charge->getCardLastFour())
                 ->generateConfirmationNumber();
 
-            $this->orderRepository->save($order);
+            $reservation->complete(
+                $order,
+                $this->orderRepository,
+                $this->bookItemRepository,
+                $this->mailer
+            );
 
             $this->mailer->send(
                 $order->getEmail(),
                 new Email\OrderConfirmationEmail($order)
             );
 
-            return JsonResponse(['success' => true], 201);
+            return new JsonResponse(['success' => true], 201);
         } catch (PaymentFailedException $e) {
             $reservation->cancel();
 

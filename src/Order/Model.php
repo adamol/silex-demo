@@ -4,17 +4,22 @@ namespace Order;
 
 class Model
 {
+    private $id;
+
     private $items;
 
     private $email;
 
     private $amount;
 
+    private $cardLastFour;
+
     private $confirmationNumber;
 
     public function getItems()
     {
         return $this->items;
+        $this->id = $id;
     }
 
     public function getEmail()
@@ -58,6 +63,18 @@ class Model
         $alphabet = 'ABCDEFGHIJKMNPQRSTUVWXYZ0123456789';
 
         $this->confirmationNumber = substr(str_shuffle(str_repeat($alphabet, $length)), 0, $length);
+
+        return $this;
+    }
+
+    public function getCardLastFour()
+    {
+        return $this->cardLastFour;
+    }
+
+    public function setCardLastFour($value)
+    {
+        $this->cardLastFour = $value;
 
         return $this;
     }

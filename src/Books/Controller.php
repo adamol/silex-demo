@@ -4,6 +4,9 @@ namespace Books;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Auth\Authenticator;
+use Framework\JobsRepository;
+use Framework\FileUploader;
 
 class Controller
 {
@@ -17,7 +20,7 @@ class Controller
 
     private $fileUploader;
 
-    public function __construct(Repository $repository, Validator $validator, Auth\Authenticator $authenticator, Framework\JobRepository $jobRepository, \Framework\FileUploader $fileUploader)
+    public function __construct(Repository $repository, Validator $validator, Authenticator $authenticator, JobsRepository $jobRepository, FileUploader $fileUploader)
     {
         $this->repository = $repository;
         $this->validator = $validator;
@@ -29,9 +32,8 @@ class Controller
     public function index(Request $request)
     {
         if ($request->query->has('categories')) {
-            $books = $this->repository->findByCategories(
-                $request->query->get('categories')
-            );
+            $categories = explode(',', $request->query->get('categories'));
+            $books = $this->repository->findByCategories($categories);
         } else {
             $books = $this->repository->findAll();
         }

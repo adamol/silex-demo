@@ -42,7 +42,7 @@ class Authenticator
     private function verifyTimestampValid()
     {
         if ($user->getTokentimestamp() < date('Y-m-d H:i:s') - 3600) {
-            throw new \InvalidArgumentException('The provided token has expired'));
+            throw new \InvalidArgumentException('The provided token has expired');
         }
     }
 
@@ -51,7 +51,7 @@ class Authenticator
         if (! $user->isAdmin()) {
             throw new \InvalidArgumentException(
                 'The provided token does not belong to an admin.'
-            ));
+            );
         }
     }
 }

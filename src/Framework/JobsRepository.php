@@ -1,5 +1,7 @@
 <?php
 
+namespace Framework;
+
 class JobsRepository
 {
     private $db;
@@ -38,7 +40,7 @@ class JobsRepository
             $stmt = $this->db->prepare($sql);
 
             $stmt->execute([
-                'pending', 'image_resize', json_encode(['image_path' => $imagePath)
+                'pending', 'image_resize', json_encode(['image_path' => $imagePath])
             ]);
         }
     }
@@ -46,7 +48,7 @@ class JobsRepository
     public function findPendingJobs()
     {
         $sql = '
-            SELECT status, type, options
+            SELECT id, status, type, options
             FROM jobs
             WHERE status=?
         ';
@@ -55,13 +57,16 @@ class JobsRepository
 
         $stmt->execute(['pending']);
 
-        $entry = $stmt->fetchAll();
+        $entries = $stmt->fetchAll();
 
-        return new Job(
-            $entry['status'],
-            $entry['type'],
-            json_decode($entry['options'], true)
-        );
+        return array_map(function($entry) {
+            return new Job(
+                $entry['id'],
+                $entry['status'],
+                $entry['type'],
+                json_decode($entry['options'], true)
+            );
+        }, $entries);
     }
 
     public function updateJobStatus(Job $job, $status)

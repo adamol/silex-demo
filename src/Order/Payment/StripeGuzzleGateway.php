@@ -2,13 +2,13 @@
 
 namespace Order\Payment;
 
-class StripeGuzzleGateway
+class StripeGuzzleGateway implements PaymentGateway
 {
     private $apiKey;
 
     private $guzzleClient;
 
-    public function __construct($apiKey, \GuzzleHttp\Client $httpClient)
+    public function __construct($apiKey, \GuzzleHttp\Client $guzzleClient)
     {
         $this->apiKey = $apiKey;
 
@@ -30,10 +30,9 @@ class StripeGuzzleGateway
 
 			$decoded = json_decode($response->getBody()->getContents(), true);
 
-            return new Charge([
-                'amount' => $decoded['amount'],
-                'card_last_four' => $decoded['source']['last4']
-            ]);
+            return new Charge($decoded['amount'], $decoded['source']['last4']);
+        } catch (\Exception $e) {
+            throw new PaymentFailedException;
         }
     }
 }

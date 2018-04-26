@@ -1,10 +1,10 @@
 <?php
 
-namespace Cart;
+namespace Order;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints;
-use Framework\BaseValidator;
+use Framework\Validator as BaseValidator;
 
 class Validator extends BaseValidator
 {

@@ -8,6 +8,8 @@ class Model
 
     private $book;
 
+    private $bookPrice;
+
     private $code;
 
     private $bookId;
@@ -112,6 +114,18 @@ class Model
     public function setCode($value)
     {
         $this->code = $value;
+
+        return $this;
+    }
+
+    public function getBookPrice()
+    {
+        return $this->bookPrice;
+    }
+
+    public function setBookPrice($value)
+    {
+        $this->bookPrice = $value;
 
         return $this;
     }
