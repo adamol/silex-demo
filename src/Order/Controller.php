@@ -79,11 +79,6 @@ class Controller
                 $this->mailer
             );
 
-            $this->mailer->send(
-                $order->getEmail(),
-                new Email\OrderConfirmationEmail($order)
-            );
-
             return new JsonResponse(['success' => true], 201);
         } catch (PaymentFailedException $e) {
             $reservation->cancel();

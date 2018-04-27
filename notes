@@ -3,6 +3,9 @@
     update cart items in general
 
 @TODO
+    doctrine dbal or custom query builder
+        -> $this->db->createQueryBuilder()->...
+        -> return $this->hydrate($results, new SomeResultModel);
     typehint Requests eg Order\Request\CreateOrderRequest, Order\Request\GetOrderRequest
         -> extend ArgumentResolver
         -> validate with symfony/validator annotations

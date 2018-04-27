@@ -1,17 +1,32 @@
-As a customer
-In order to find the book I want
-I need to be able to view them by category
+Feature: Viewing books listing
 
     Background:
-        GIVEN there are "5" "book"s in the system
-        AND the "book"s with id "1,2" are of category "thriller"
-        AND the "book"s with id "3,4,5" are of category "comedy"
+        GIVEN there are "5" books in the system
+        AND the books with id "1,2" are of category "thriller"
+        AND the books with id "3,4" are of category "comedy"
+        AND the books with id "5" are of category "thriller,comedy"
 
     Scenario: Viewing all books
-        WHEN I send a request to the books listing page
-        THEN I should see "5" "book"s
+        WHEN I send a "GET" request to "/books"
+        THEN I should see "5" books
 
     Scenario: Viewing all books by category
-        WHEN I send a request to the books listing page for category "thriller"
-        THEN I should see "2" "book"s
-        AND they should have ids "1,2"
+        WHEN I send a "GET" request to "/books?categories=thriller"
+        THEN I should see "3" books
+        AND the response contains json:
+        """
+        [
+            {
+                id: 1,
+                categories: "thriller"
+            },
+            {
+                id: 2,
+                categories: "thriller"
+            },
+            {
+                id: 5,
+                categories: "thriller,comedy"
+            },
+        ]
+        """
