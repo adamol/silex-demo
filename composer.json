@@ -7,15 +7,19 @@
         "guzzlehttp/guzzle": "^6.3",
         "vlucas/phpdotenv": "^2.4",
         "behat/behat": "^3.4",
-        "monolog/monolog": "^1.23"
+        "monolog/monolog": "^1.23",
+        "doctrine/orm": "^2.5"
     },
     "autoload": {
         "psr-4": {
             "Books\\": "src/Books",
             "Cart\\": "src/Cart",
+            "Category\\": "src/Category",
+            "BookCategory\\": "src/BookCategory",
             "Order\\": "src/Order",
             "Auth\\": "src/Auth",
-            "Framework\\": "src/Framework"
+            "Framework\\": "Framework/",
+            "Factories\\": "tests/Factories"
         },
         "files": [
             "tests/ControllerTestCase.php", "utility/helpers.php"

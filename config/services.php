@@ -89,3 +89,27 @@ $app['stripe.api_key'] = getenv('STRIPE_API_KEY');
 
 $app['encryption.method'] = getenv('ENCRYPTION_METHOD');
 $app['encryption.key'] = getenv('ENCRYPTION_KEY');
+
+$app['doctrine.entity_manager'] = function($app) {
+    $isDevMode = true;
+    $annotationDirs = array_map(function($module) {
+        return __DIR__."/../src/$module/Entities";
+    }, $app['modules'];
+
+    $config = Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
+        $annotationDirs, $isDevMode, null, null, false
+    );
+
+    //$conn = array(
+    //    'driver' => 'pdo_sqlite',
+    //    'path' => __DIR__ . '/../db.sqlite',
+    //);
+    $conn = [
+        'dbname' => 'silex_demo',
+        'user' => 'root',
+        'password' => 'root',
+        'host' => 'localhost',
+        'driver' => 'pdo_mysql',
+    ];
+    return Doctrine\ORM\EntityManager::create($conn, $config);
+};

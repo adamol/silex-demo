@@ -29,3 +29,4 @@ $app['books.image_resizer'] = function($app) {
 $app['books.items.controller'] = function() {
     return new Books\Item\Controller();
 };
+

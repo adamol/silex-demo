@@ -66,7 +66,7 @@ class Controller
     {
         $this->validator->validateSignOut($request);
 
-        $this->repository->clearTokenInfo($request->query->get('token');
+        $this->repository->clearTokenInfo($request->query->get('token'));
 
         return JsonRepsonse(['success' => true]);
     }

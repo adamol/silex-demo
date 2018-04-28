@@ -1,15 +1,15 @@
 <?php
 
-require __DIR__ . "/services.php";
-require __DIR__ . "/providers.php";
-require __DIR__ . "/middleware.php";
-
-$modules = [
+$app['modules'] = $modules = [
     'Books',
     'Cart',
     'Auth',
     'Order'
 ];
+
+require __DIR__ . "/services.php";
+require __DIR__ . "/providers.php";
+require __DIR__ . "/middleware.php";
 
 foreach ($modules as $module) {
     require __DIR__ . "/../src/$module/config/services.php";

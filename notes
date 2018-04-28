@@ -3,6 +3,9 @@
     update cart items in general
 
 @TODO
+    resolving classnames
+        -> $app[Book\Repository::class]
+        -> NOT $app['books.repository']
     doctrine dbal or custom query builder
         -> $this->db->createQueryBuilder()->...
         -> return $this->hydrate($results, new SomeResultModel);

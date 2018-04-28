@@ -26,7 +26,7 @@ class TokenRepository
         if ($entry['token_timestamp'] < date('Y-m-d H:i:s') - 3600) {
             throw new \RuntimeException(
                 'The token for that user has expired'
-            ));
+            );
         }
 
         return $this->hydrateEntry($stmt->fetch());
