@@ -1,34 +1,96 @@
 <?php
 
-namespace Books;
+namespace Books\Entities;
 
-class Model
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="books")
+ */
+class Book
 {
     const BOOK_COVER_IMAGE_PATH = 'images/book_covers/';
 
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
+     **/
     private $id;
 
-    private $title;
-
-    private $slug;
-
-    private $imagePath;
-
-    private $description;
-
-    private $pageCount;
-
-    private $price;
-
+    /**
+     * Many Books have Many Categories.
+     * @ORM\ManyToMany(targetEntity="Categories\Entities\Category")
+     * @ORM\JoinTable(name="book_category",
+     *     joinColumns={@ORM\JoinColumn(name="book_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="id", unique=true)}
+     * )
+     **/
     private $categories;
 
+    /**
+     * One Book has Many BookItems.
+     * @ORM\OneToMany(targetEntity="Books\Entities\BookItem", mappedBy="book")
+     **/
+    private $bookItems;
+
+    /**
+     * @ORM\Column(type="string")
+     **/
+    private $title;
+
+    /**
+     * @ORM\Column(type="string")
+     **/
+    private $slug;
+
+    /**
+     * @ORM\Column(type="string")
+     **/
+    private $imagePath;
+
+    /**
+     * @ORM\Column(type="text")
+     **/
+    private $description;
+
+    /**
+     * @ORM\Column(type="integer")
+     **/
+    private $pageCount;
+
+    /**
+     * @ORM\Column(type="integer")
+     **/
+    private $price;
+
+    /**
+     * @ORM\Column(type="integer")
+     **/
     private $bookCount;
 
+    /**
+     * @ORM\Column(type="datetime")
+     **/
     private $publishedDate;
 
+    /**
+     * @ORM\Column(type="datetime")
+     **/
     private $updatedAt;
 
+    /**
+     * @ORM\Column(type="datetime")
+     **/
     private $createdAt;
+
+    public function __construct()
+    {
+        $this->categories = new ArrayCollection();
+        $this->bookItems = new ArrayCollection();
+    }
 
     public function setId($value)
     {
@@ -180,6 +242,30 @@ class Model
         return $this;
     }
 
+    public function getBookCount()
+    {
+        return $this->bookCount;
+    }
+
+    public function setBookCount($value)
+    {
+        $this->bookCount = $value;
+
+        return $this;
+    }
+
+    public function getBookItems()
+    {
+        return $this->bookItems;
+    }
+
+    public function setBookItems($value)
+    {
+        $this->bookItems = $value;
+
+        return $this;
+    }
+
     /**
      * @return array
      */
@@ -199,17 +285,5 @@ class Model
           'created_at' => $this->getCreatedAt(),
           'updated_at' => $this->getUpdatedAt()
         ];
-    }
-
-    public function getBookCount()
-    {
-        return $this->bookCount;
-    }
-
-    public function setBookCount($value)
-    {
-        $this->bookCount = $value;
-
-        return $this;
     }
 }

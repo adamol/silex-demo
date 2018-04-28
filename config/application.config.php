@@ -4,7 +4,8 @@ $app['modules'] = $modules = [
     'Books',
     'Cart',
     'Auth',
-    'Order'
+    'Order',
+    'Categories'
 ];
 
 require __DIR__ . "/services.php";

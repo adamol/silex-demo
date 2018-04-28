@@ -94,7 +94,7 @@ $app['doctrine.entity_manager'] = function($app) {
     $isDevMode = true;
     $annotationDirs = array_map(function($module) {
         return __DIR__."/../src/$module/Entities";
-    }, $app['modules'];
+    }, $app['modules']);
 
     $config = Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
         $annotationDirs, $isDevMode, null, null, false
