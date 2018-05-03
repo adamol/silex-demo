@@ -2,11 +2,12 @@
 
 namespace Categories\Entities;
 
+use Books\Entities\Book;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Categories\Repository")
  * @ORM\Table(name="categories")
  */
 class Category
@@ -34,18 +35,32 @@ class Category
     private $type;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=false)
      **/
     private $createdAt;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      **/
     private $updatedAt;
 
     public function __construct()
     {
-        $this->bookItems = new ArrayCollection();
+        $this->books = new ArrayCollection();
+    }
+
+    /**
+	* @param Books\Entities\Book
+    */
+    public function addBook(Book $book)
+    {
+        if ($this->books->contains($book)) {
+            return;
+        }
+
+        $this->books->add($book);
+
+        $book->addCategory($this);
     }
 
     public function getId()

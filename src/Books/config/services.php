@@ -1,7 +1,7 @@
 <?php
 
 $app['books.repository'] = function($app) {
-    return new Books\Repository($app['db']);
+    return $app['doctrine.entity_manager']->getRepository('Books\Entities\Book');
 };
 
 $app['books.controller'] = function($app) {
@@ -19,6 +19,7 @@ $app['books.validator'] = function($app) {
 };
 
 $app['books.item.repository'] = function($app) {
+    return $app['doctrine.entity_manager']->getRepository('Books\Entities\BookItem');
     return new Books\Item\Repository($app['db']);
 };
 

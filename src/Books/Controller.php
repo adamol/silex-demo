@@ -37,6 +37,7 @@ class Controller
         } else {
             $books = $this->repository->findAll();
         }
+        var_dump($books); die();
 
         return new JsonResponse(array_map(function($book) {
             return $book->toArray();

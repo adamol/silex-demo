@@ -5,7 +5,7 @@ $app['modules'] = $modules = [
     'Cart',
     'Auth',
     'Order',
-    'Categories'
+    'Categories',
 ];
 
 require __DIR__ . "/services.php";
@@ -16,4 +16,6 @@ foreach ($modules as $module) {
     require __DIR__ . "/../src/$module/config/services.php";
     require __DIR__ . "/../src/$module/config/routes.php";
 }
+
+require __DIR__ . "/../db/Seeders/config/services.php";
 

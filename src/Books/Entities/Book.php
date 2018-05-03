@@ -2,11 +2,12 @@
 
 namespace Books\Entities;
 
+use Categories\Entities\Category;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Books\Repository")
  * @ORM\Table(name="books")
  */
 class Book
@@ -66,9 +67,6 @@ class Book
      **/
     private $price;
 
-    /**
-     * @ORM\Column(type="integer")
-     **/
     private $bookCount;
 
     /**
@@ -77,12 +75,12 @@ class Book
     private $publishedDate;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      **/
     private $updatedAt;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=false)
      **/
     private $createdAt;
 
@@ -90,6 +88,34 @@ class Book
     {
         $this->categories = new ArrayCollection();
         $this->bookItems = new ArrayCollection();
+    }
+
+    /**
+	* @param Categories\Entities\Category
+    */
+    public function addCategory(Category $category)
+    {
+        if ($this->categories->contains($category)) {
+            return;
+        }
+
+        $this->categories->add($category);
+
+        //$category->addBook($this);
+    }
+
+    /**
+	* @param Books\Entities\Book
+    */
+    public function addBookItem(BookItem $bookItem)
+    {
+        if ($this->bookItems->contains($bookItem)) {
+            return;
+        }
+
+        $this->bookItems->add($bookItem);
+
+        $bookItem->setBook($this);
     }
 
     public function setId($value)

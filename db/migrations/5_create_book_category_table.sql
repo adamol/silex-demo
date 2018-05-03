@@ -1,4 +1,4 @@
-CREATE TABLE book_category (
+CREATE TABLE book_category2 (
     id INT AUTO_INCREMENT PRIMARY KEY,
     book_id INT UNSIGNED NOT NULL,
     category_id INT UNSIGNED NOT NULL,

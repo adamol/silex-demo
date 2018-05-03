@@ -1,14 +1,9 @@
 @TODO
-    remove cart items!
-    update cart items in general
+    implement doctrine repositories
+        -> go through booking funnel
+    replace string identifier with class identifier in pimple
+        -> ie not 'books.repository' but rather \Books\Repository::class
 
-@TODO
-    resolving classnames
-        -> $app[Book\Repository::class]
-        -> NOT $app['books.repository']
-    doctrine dbal or custom query builder
-        -> $this->db->createQueryBuilder()->...
-        -> return $this->hydrate($results, new SomeResultModel);
     typehint Requests eg Order\Request\CreateOrderRequest, Order\Request\GetOrderRequest
         -> extend ArgumentResolver
         -> validate with symfony/validator annotations
@@ -17,6 +12,12 @@
         -> zend/hydrator or simply ->toArray() method on response objects
         -> possibly thephpleague fractal using models could work well
         -> after middleware
+
+@TODO
+    remove cart items!
+    update cart items in general
+
+@TODO
     testing fakes
         -> mailer, httpclient, file upload, queue
     auth middleware

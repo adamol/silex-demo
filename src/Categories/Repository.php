@@ -2,7 +2,9 @@
 
 namespace Categories;
 
-class Repository
+use Doctrine\ORM\EntityRepository;
+
+class Repository extends EntityRepository
 {
 
 }

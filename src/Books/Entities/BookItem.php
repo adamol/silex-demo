@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Books\Item\Repository")
  * @ORM\Table(name="book_items")
  */
 class BookItem
@@ -28,68 +28,35 @@ class BookItem
     /**
      * Many BookItems have One Orders.
      * @ORM\ManyToOne(targetEntity="Order\Entities\Order", inversedBy="bookItems")
-     * @ORM\JoinColumn(name="order_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="order_id", referencedColumnName="id", nullable=true)
      **/
     private $order;
 
-    /**
-     * @ORM\Column(type="string")
-     **/
     private $bookPrice;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      **/
     private $code;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      **/
     private $reservedAt;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=false)
      **/
     private $createdAt;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      **/
     private $updatedAt;
 
     public function getId()
     {
         return $this->id;
-    }
-
-    public function getBook()
-    {
-        return $this->book;
-    }
-
-    public function getBookId()
-    {
-        return $this->bookId;
-    }
-
-    public function getOrderId()
-    {
-        return $this->orderId;
-    }
-
-    public function getReservedAt()
-    {
-        return $this->reservedAt;
-    }
-
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
     }
 
     public function setId($value)
@@ -99,6 +66,11 @@ class BookItem
         return $this;
     }
 
+    public function getBook()
+    {
+        return $this->book;
+    }
+
     public function setBook($value)
     {
         $this->book = $value;
@@ -106,37 +78,26 @@ class BookItem
         return $this;
     }
 
-    public function setBookId($value)
+    public function getOrder()
     {
-        $this->bookId = $value;
+        return $this->order;
+    }
+
+    public function setOrder($value)
+    {
+        $this->order = $value;
 
         return $this;
     }
 
-    public function setOrderId($value)
+    public function getBookPrice()
     {
-        $this->orderId = $value;
-
-        return $this;
+        return $this->bookPrice;
     }
 
-    public function setReservedAt($value)
+    public function setBookPrice($value)
     {
-        $this->reservedAt = $value;
-
-        return $this;
-    }
-
-    public function setCreatedAt($value)
-    {
-        $this->createdAt = $value;
-
-        return $this;
-    }
-
-    public function setUpdatedAt($value)
-    {
-        $this->updatedAt = $value;
+        $this->bookPrice = $value;
 
         return $this;
     }
@@ -153,14 +114,38 @@ class BookItem
         return $this;
     }
 
-    public function getBookPrice()
+    public function getReservedAt()
     {
-        return $this->bookPrice;
+        return $this->reservedAt;
     }
 
-    public function setBookPrice($value)
+    public function setReservedAt($value)
     {
-        $this->bookPrice = $value;
+        $this->reservedAt = $value;
+
+        return $this;
+    }
+
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt($value)
+    {
+        $this->createdAt = $value;
+
+        return $this;
+    }
+
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt($value)
+    {
+        $this->updatedAt = $value;
 
         return $this;
     }

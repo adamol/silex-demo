@@ -14,12 +14,12 @@
         "psr-4": {
             "Books\\": "src/Books",
             "Cart\\": "src/Cart",
-            "Category\\": "src/Category",
-            "BookCategory\\": "src/BookCategory",
+            "Categories\\": "src/Categories",
             "Order\\": "src/Order",
             "Auth\\": "src/Auth",
             "Framework\\": "Framework/",
-            "Factories\\": "tests/Factories"
+            "Factories\\": "tests/Factories",
+            "Seeders\\": "db/Seeders"
         },
         "files": [
             "tests/ControllerTestCase.php", "utility/helpers.php"
