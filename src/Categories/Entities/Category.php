@@ -2,6 +2,7 @@
 
 namespace Categories\Entities;
 
+use Categories\Entities\BookCategory;
 use Books\Entities\Book;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -20,14 +21,9 @@ class Category
     private $id;
 
     /**
-     * Many Categories have Many Books.
-     * @ORM\ManyToMany(targetEntity="Books\Entities\Book")
-     * @ORM\JoinTable(name="book_category",
-     *     joinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="book_id", referencedColumnName="id", unique=true)}
-     * )
+     * @ORM\OneToMany(targetEntity="Categories\Entities\BookCategory", mappedBy="book")
      **/
-    private $books;
+    private $bookCategories;
 
     /**
      * @ORM\Column(type="string")
@@ -46,21 +42,21 @@ class Category
 
     public function __construct()
     {
-        $this->books = new ArrayCollection();
+        $this->bookCategories = new ArrayCollection();
     }
 
     /**
-	* @param Books\Entities\Book
+	* @param Categories\Entities\BookCategory
     */
-    public function addBook(Book $book)
+    public function addBookCategory(BookCategory $bookCategory)
     {
-        if ($this->books->contains($book)) {
+        if ($this->bookCategories->contains($bookCategory)) {
             return;
         }
 
-        $this->books->add($book);
+        $this->bookCategories->add($bookCategory);
 
-        $book->addCategory($this);
+        $bookCategory->setCategory($this);
     }
 
     public function getId()

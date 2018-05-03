@@ -5,7 +5,7 @@ namespace Seeders;
 use Books\Entities\Book;
 use Books\Entities\BookItem;
 use Categories\Entities\Category;
-use BookCategory\Entities\BookCategory;
+use Categories\Entities\BookCategory;
 
 class BooksTableSeeder
 {
@@ -98,34 +98,38 @@ class BooksTableSeeder
 
     private function addBookItemsTo(Book $book)
     {
-        $bookItem = new BookItem;
+        for ($i = 0; $i < 5; $i++) {
+            $bookItem = new BookItem;
 
-        $bookItem->setBook($book);
-        $bookItem->setOrder(null);
-        $bookItem->setReservedAt(null);
-        $bookItem->setCreatedAt($this->randomDate('2018-01-01', '2018-05-01'));
+            $bookItem->setBook($book);
+            $bookItem->setOrder(null);
+            $bookItem->setReservedAt(null);
+            $bookItem->setCreatedAt($this->randomDate('2018-01-01', '2018-05-01'));
 
-        $this->entityManager->persist($bookItem);
+            $this->entityManager->persist($bookItem);
 
-        $book->addBookItem($bookItem);
+            $book->addBookItem($bookItem);
+        }
     }
 
     private function addCategoriesTo(Book $book)
     {
         $categories = $this->availableCategories;
-        var_dump(array_map(function($c) { return $c->getId(); }, $categories));
-        var_dump($book->getId());
 
         do {
             $randomIndex = array_rand($categories);
             $category = $categories[$randomIndex];
             unset($categories[$randomIndex]);
 
-            $book->addCategory($category);
+            $bookCategory = new BookCategory;
+            $bookCategory->setBook($book);
+            $bookCategory->setCategory($category);
+            $bookCategory->setCreatedAt($this->randomDate('2018-01-01', '2018-05-01'));
+
+            $this->entityManager->persist($bookCategory);
 
             $randInt = rand(1, 10);
         } while ($randInt > 7 && ! empty($categoryIds));
-        var_dump(count($book->getCategories()));
     }
 
     public function randomDate($startDate, $endDate)
