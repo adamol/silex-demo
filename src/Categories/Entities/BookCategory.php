@@ -54,4 +54,9 @@ class BookCategory
     {
         $this->createdAt = $createdAt;
     }
+
+    public function getCategory()
+    {
+        return $this->category;
+    }
 }

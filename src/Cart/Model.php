@@ -6,7 +6,7 @@ use Order\Reservation;
 
 class Model
 {
-    private $items;
+    private $items = [];
 
     public function setItems(array $value)
     {

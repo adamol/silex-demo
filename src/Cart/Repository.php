@@ -31,7 +31,7 @@ class Repository
 
     public function get($sessionId)
     {
-        return $this->session->get($this->getCartKey($sessionId));
+        return $this->session->get($this->getCartKey($sessionId), new Model);
     }
 
     private function getCartKey($sessionId)

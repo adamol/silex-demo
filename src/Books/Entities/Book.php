@@ -152,7 +152,13 @@ class Book
 
     public function getCategories()
     {
-        return $this->categories;
+        $categories = [];
+
+        foreach ($this->bookCategories as $bookCategory) {
+            $categories[] = $bookCategory->getCategory()->getType();
+        }
+
+        return $categories;
     }
 
     public function getSlug()
@@ -210,6 +216,9 @@ class Book
 
     public function getPublishedDate()
     {
+        if ($this->publishedDate instanceof \DateTime) {
+            return $this->publishedDate;
+        }
         // If publishedDate is in format Y-m-d we will return it straight away.
         // Otherwise it is in format Y-m-d H:i:s and we need to format it.
         if (strpos($this->publishedDate, ':') === false) {

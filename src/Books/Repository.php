@@ -9,15 +9,12 @@ class Repository extends EntityRepository
 {
     public function findByCategories($categories)
     {
-        $this->getEntityManager()->createQueryBuilder()
-            ->select('
-                b,
-                GROUP_CONCAT(DISTINCT(c.type)) as categories,
-                count(DISTINCT(i.id)) as book_count
-            ')
+        return $this->getEntityManager()->createQueryBuilder()
+            ->select('b')
             ->from('Books\Entities\Book', 'b')
-            ->join('Categories\Entities\Category', 'c', Join::WITH, 'b.categories = c.books')
-            ->join('Books\Entities\BookItem', 'i', Join::WITH, 'b.book_items = i.book')
+            ->join('Categories\Entities\BookCategory', 'bc', Join::WITH, 'bc.book = b.id')
+            ->join('Categories\Entities\Category', 'c', Join::WITH, 'bc.category = c.id')
+            ->join('Books\Entities\BookItem', 'i', Join::WITH, 'i.book = b.id')
             ->where('c.type IN (:categories)')
             ->setParameter('categories', $categories)
             ->getQuery()

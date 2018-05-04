@@ -37,11 +37,17 @@ class Controller
         } else {
             $books = $this->repository->findAll();
         }
-        var_dump($books); die();
 
         return new JsonResponse(array_map(function($book) {
             return $book->toArray();
         }, $books));
+    }
+
+    public function show($bookId)
+    {
+        $book = $this->repository->find($bookId);
+
+        return new JsonResponse($book->toArray());
     }
 
     public function store(Request $request)
@@ -72,12 +78,5 @@ class Controller
             'success' => true,
             'last_inserted_id' => $lastInsertedId
         ]);
-    }
-
-    public function show($bookId)
-    {
-        $book = $this->repository->findById($bookId);
-
-        return new JsonResponse($book->toArray());
     }
 }

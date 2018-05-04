@@ -1,4 +1,13 @@
 @TODO
+    Config & Routing Layer
+    Factory & Service Layer
+    Request Validation Layer
+    Presentation Layer
+    Controller Layer
+    Database Layer
+
+
+@TODO
     implement doctrine repositories
         -> go through booking funnel
     replace string identifier with class identifier in pimple
