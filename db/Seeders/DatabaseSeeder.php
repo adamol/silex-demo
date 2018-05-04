@@ -5,7 +5,8 @@ namespace Seeders;
 class DatabaseSeeder
 {
     private $seeders = [
-        BooksTableSeeder::class
+        BooksTableSeeder::class,
+        //OrdersTableSeeder::class
     ];
 
     private $app;

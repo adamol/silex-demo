@@ -32,7 +32,7 @@ class StripeGuzzleGateway implements PaymentGateway
 
             return new Charge($decoded['amount'], $decoded['source']['last4']);
         } catch (\Exception $e) {
-            throw new PaymentFailedException;
+            throw new PaymentFailedException($e->getMessage());
         }
     }
 }

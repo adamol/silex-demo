@@ -37,9 +37,9 @@ class Reservation
 
     public function complete($order, $orderRepository, $bookItemRepository, $mailer)
     {
-        $orderId = $orderRepository->save($order);
+        $orderRepository->save($order);
 
-        $bookItemRepository->updateOrderIdForItems($orderId, $order->getItems());
+        $bookItemRepository->connectItemsToOrder($order, $order->getBookItems());
 
         $mailer->send(
             $order->getEmail(),

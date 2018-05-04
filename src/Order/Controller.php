@@ -2,8 +2,14 @@
 
 namespace Order;
 
+use Cart\Repository as CartRepository;
+use Books\Item\Repository as BooksRepository;
+use Framework\Validator as BaseValidator;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Order\Payment\PaymentGateway;
+use Framework\Mailer;
+use Auth\Authenticator;
 
 class Controller
 {
@@ -22,13 +28,13 @@ class Controller
     private $authenticator;
 
     public function __construct(
-        \Framework\Validator $validator,
-        \Order\Payment\PaymentGateway $paymentGateway,
-        \Cart\Repository $cartRepository,
-        \Books\Item\Repository $bookItemRepository,
-        \Order\Repository $orderRepository,
-        \Framework\Mailer $mailer,
-        \Auth\Authenticator $authenticator
+        BaseValidator $validator,
+        PaymentGateway $paymentGateway,
+        CartRepository $cartRepository,
+        BooksRepository $bookItemRepository,
+        Repository $orderRepository,
+        Mailer $mailer,
+        Authenticator $authenticator
     ) {
         $this->validator = $validator;
         $this->paymentGateway = $paymentGateway;
@@ -41,10 +47,23 @@ class Controller
 
     public function show($confirmationNumber)
     {
-        $jsonableOrder = $this->orderRepository
+        $order = $this->orderRepository
             ->findOrderWithBooksByConfirmationNumber($confirmationNumber);
 
-		return new JsonResponse($jsonableOrder->toArray());
+        return new JsonResponse([
+            'card_last_four' => $order->getCardLastFour(),
+            'amount' => $order->getAmount(),
+            'email' => $order->getEmail(),
+            'confirmation_number' => $order->getConfirmationNumber(),
+            'items' => array_map(function($item) {
+                return [
+                    'id' => $item->getId(),
+                    'book' => $item->getBook()->toArray(),
+                    'code' => $item->getCode(),
+                    'reserved_at' => $item->getReservedAt()
+                ];
+            }, $order->getBookItems()->getValues())
+        ]);
     }
 
     public function store(Request $request)
@@ -65,11 +84,12 @@ class Controller
                 $reservation->getEmail()
             );
 
-            $order = (new Model)
+            $order = (new \Order\Entities\Order)
                 ->setItems($reservation->getItems())
                 ->setEmail($reservation->getEmail())
                 ->setAmount($charge->getAmount())
                 ->setCardLastFour($charge->getCardLastFour())
+				->setCreatedAt(new \DateTime('now'))
                 ->generateConfirmationNumber();
 
             $reservation->complete(

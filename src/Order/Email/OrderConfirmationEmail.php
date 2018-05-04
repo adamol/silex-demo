@@ -9,7 +9,7 @@ class OrderConfirmationEmail extends AbstractEmail implements Queueable
 {
     private $order;
 
-    public function __construct(\Order\Model $order)
+    public function __construct(\Order\Entities\Order $order)
     {
         $this->order = $order;
     }

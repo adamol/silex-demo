@@ -13,7 +13,7 @@ $app['order.controller'] = function($app) {
 };
 
 $app['order.repository'] = function($app) {
-    return new Order\Repository($app['db']);
+    return $app['doctrine.entity_manager']->getRepository(Order\Entities\Order::class);
 };
 
 $app['order.payment.stripe_gateway'] = function($app) {

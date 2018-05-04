@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Order\Repository")
  * @ORM\Table(name="orders")
  */
 class Order
@@ -59,6 +59,20 @@ class Order
         $this->bookItems = new ArrayCollection();
     }
 
+	 /**
+	 *
+	 * @ORM\PrePersist
+	 * @ORM\PreUpdate
+	 */
+	public function updatedTimestamps()
+	{
+		$this->setUpdatedAt(new \DateTime('now'));
+
+		if (! isset($this->createdAt) || $this->createdAt === null) {
+			$this->setCreatedAt(new \DateTime('now'));
+		}
+	}
+
     public function getId()
     {
         return $this->id;
@@ -71,16 +85,28 @@ class Order
         return $this;
     }
 
+    public function setItems(array $items)
+    {
+        foreach ($items as $item) {
+            $this->addBookItem($item);
+        }
+
+        return $this;
+    }
+
     public function getBookItems()
     {
         return $this->bookItems;
     }
 
-    public function setBookItems($value)
+    public function addBookItem(\Books\Entities\BookItem $bookItem)
     {
-        $this->bookItems = $value;
+        if ($this->bookItems->contains($bookItem)) {
+            return;
+        }
 
-        return $this;
+        $this->bookItems->add($bookItem);
+        $bookItem->setOrder($this);
     }
 
     public function getEmail()
